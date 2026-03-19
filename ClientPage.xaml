@@ -19,12 +19,16 @@
             <TextBox x:Name="SearchTextBox" Width="300" Height="30" TextChanged="SearchTextBox_TextChanged"/>
             <TextBlock Text="Фильтр:" VerticalAlignment="Center" FontSize="14" Margin="0,0,10,0"/>
             <ComboBox x:Name="FilterComboBox" Width="200" Height="30" SelectionChanged="FilterComboBox_SelectionChanged"
-          DisplayMemberPath="Title"/>
+          DisplayMemberPath="Title">
+                <ComboBoxItem>Все</ComboBoxItem>
+                <ComboBoxItem>Мужской</ComboBoxItem>
+                <ComboBoxItem>Женский</ComboBoxItem>
+            </ComboBox>
             <TextBlock Text="Сортировка:" VerticalAlignment="Center" FontSize="14" Margin="0,0,10,0"/>
             <ComboBox x:Name="SortComboBox" Width="250" Height="30" SelectionChanged="SortComboBox_SelectionChanged">
                 <ComboBoxItem Tag="NameAsc">Нет</ComboBoxItem>
                 <ComboBoxItem Tag="NameDesc">Фамилия (А-Я)</ComboBoxItem>
-                <ComboBoxItem Tag="DiscountAsc">Кол-во посещений (по возрастанию)</ComboBoxItem>
+                <ComboBoxItem Tag="DiscountAsc">Кол-во посещений (по убыванию)</ComboBoxItem>
                 <ComboBoxItem Tag="DiscountDesc">По дате последнего посещения</ComboBoxItem>
             </ComboBox>
         </StackPanel>
@@ -92,7 +96,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <Button Content="Удалить" Name="DeleteBtn" Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Center"
-             Click="DeleteBtn_Click" Width="100" Visibility="Hidden"></Button>
+             Click="DeleteBtn_Click" Width="100" Visibility="Visible"></Button>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
             <TextBlock Name="TBCount" FontSize="20"  VerticalAlignment="Center" ></TextBlock>
             <TextBlock Name="TBALLRecords" FontSize="20"   VerticalAlignment="Center"></TextBlock>

@@ -22,6 +22,7 @@ namespace БаязитовЛангуге
     public partial class ClientPage : Page
     {
         private List<Client> _filteredClients;
+        private List<Client> _allClients;
         private int pageSize = 10;
         private int currentPage = 1;
 
@@ -36,6 +37,9 @@ namespace БаязитовЛангуге
             _filteredClients = currentClients;
 
             PageListCB.SelectedIndex = 0;
+
+            _allClients = currentClients;
+            
 
             currentPage = 1;
             ChangePage();
@@ -198,17 +202,84 @@ namespace БаязитовЛангуге
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            ApplyFiltersAndSort();
         }
 
         private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ApplyFiltersAndSort();
         }
 
         private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ApplyFiltersAndSort();
         }
+        private void ApplyFiltersAndSort()
+        {
+            if (_allClients == null) return;
+
+            // Начинаем со всех клиентов
+            var query = _allClients.AsEnumerable();
+
+            // 1. ПОИСК
+            string searchText = SearchTextBox.Text?.ToLower() ?? "";
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                query = query.Where(c =>
+                    (c.LastName != null && c.LastName.ToLower().Contains(searchText)) ||
+                    (c.FirstName != null && c.FirstName.ToLower().Contains(searchText)) ||
+                    (c.Patronymic != null && c.Patronymic.ToLower().Contains(searchText)) ||
+                    (c.Email != null && c.Email.ToLower().Contains(searchText)) ||
+                    (c.Phone != null && c.Phone.Contains(searchText)));
+            }
+
+            // 2. ФИЛЬТР ПО ПОЛУ (нет/муж/жен)
+            switch (FilterComboBox.SelectedIndex)
+            {
+                case 1: // Мужской
+                    query = query.Where(c => c.GenderCode == "м");
+                    break;
+                case 2: // Женский
+                    query = query.Where(c => c.GenderCode == "ж");
+                    break;
+                    // case 0: "Все" - без фильтрации
+            }
+
+            // 3. СОРТИРОВКА
+            switch (SortComboBox.SelectedIndex)
+            {
+                case 1: // Фамилия (А-Я)
+                    query = query.OrderBy(c => c.LastName)
+                                 .ThenBy(c => c.FirstName)
+                                 .ThenBy(c => c.Patronymic);
+                    break;
+
+                case 2: // Кол-во посещений (по возрастанию)
+                    query = query.OrderByDescending(c => c.VisitsCount);
+                    break;
+
+                case 3: // По дате последнего посещения
+                    query = query.OrderByDescending(c =>
+                    {
+                        if (c.LastVisitDate == "нет")
+                            return DateTime.MinValue;
+                        else
+                            return DateTime.Parse(c.LastVisitDate);
+                    });
+                    break;
+
+                default: // case 0: "Нет" - сортировка по ID
+                    query = query.OrderBy(c => c.ID);
+                    break;
+            }
+
+            // Сохраняем результат
+            _filteredClients = query.ToList();
+
+            // Сбрасываем на первую страницу
+            currentPage = 1;
+            ChangePage();
+        }
+
     }
 }
