@@ -11,7 +11,8 @@ namespace БаязитовЛангуге
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class Client
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -29,6 +30,13 @@ namespace БаязитовЛангуге
         public string Phone { get; set; }
         public string PhotoPath { get; set; }
         public System.DateTime Birthday { get; set; }
+        public string BirthdayString
+        {
+            get
+            {
+                return Birthday.ToShortDateString();
+            }
+        }
         public string Email { get; set; }
         public System.DateTime RegistrationDate { get; set; }
 
@@ -40,13 +48,24 @@ namespace БаязитовЛангуге
             }
         }
 
-        public string BirthdayString
+
+        public string LastVisitDate
         {
             get
             {
-                return Birthday.ToShortDateString();
+                var LastVisit = ClientService.Where(p => p.ClientID == this.ID).OrderByDescending(p => p.StartTime).FirstOrDefault();
+
+                if (LastVisit == null)
+                    return "нет";
+
+                else
+                {
+                    DateTime startTime = LastVisit.StartTime;
+                    return startTime.ToString("d");
+                }
             }
         }
+        public int VisitsCount => ClientService?.Count ?? 0;
 
 
         public virtual Gender Gender { get; set; }

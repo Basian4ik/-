@@ -162,6 +162,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BayazitovModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="App.Config" />
     <None Include="BayazitovModel.edmx.diagram">
       <DependentUpon>BayazitovModel.edmx</DependentUpon>
     </None>
@@ -172,23 +173,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Res\school_logo.ico" />
     <Resource Include="Res\school_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BayazitovModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BayazitovModel.Context.cs</LastGenOutput>
-      <DependentUpon>BayazitovModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="BayazitovModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BayazitovModel.edmx</DependentUpon>
-      <LastGenOutput>BayazitovModel.cs</LastGenOutput>
-    </Content>
     <Resource Include="Клиенты\1.jpg" />
     <Resource Include="Клиенты\10.jpg" />
     <Resource Include="Клиенты\11.jpg" />
@@ -292,6 +280,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BayazitovModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BayazitovModel.edmx</DependentUpon>
+      <LastGenOutput>BayazitovModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="BayazitovModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BayazitovModel.edmx</DependentUpon>
+      <LastGenOutput>BayazitovModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

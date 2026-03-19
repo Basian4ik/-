@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:БаязитовЛангуге"
         mc:Ignorable="d"
-        Title="Баязитов Лангуаге" Height="500" Width="900" FontFamily="Comic Sans MS" Icon="Res/school_logo.ico">
+        Title="Баязитов Лангуаге" Height="500" Width="1000" FontFamily="Comic Sans MS" Icon="Res/school_logo.ico">
     <Grid  >
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>

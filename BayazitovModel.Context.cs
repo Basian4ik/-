@@ -16,7 +16,6 @@ namespace БаязитовЛангуге
     public partial class БаязитовLanguageEntities : DbContext
     {
         private static БаязитовLanguageEntities _context;
-
         public static БаязитовLanguageEntities GetContext()
         {
             if (_context == null)
