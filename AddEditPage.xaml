@@ -59,7 +59,7 @@
         </StackPanel>
 
         <TextBlock Text="Фото" Grid.Column="2" Grid.Row="0" FontSize="20" HorizontalAlignment="Center"></TextBlock>
-        <Image Name="PhotoImage" Grid.Column="2" Grid.Row="1" Grid.RowSpan="4" Width="100" Height="100" Stretch="UniformToFill" Margin="5"></Image>
+        <Image Name="PhotoImage" Grid.Column="2" Grid.Row="1" Grid.RowSpan="5" Width="200" Height="200" Stretch="UniformToFill" Margin="5"></Image>
 
         <Button Content="Выбрать фото" Name="SelectPhotoBtn" Grid.Column="2" Grid.Row="5"
                 Click="SelectPhotoBtn_Click"></Button>

@@ -49,26 +49,9 @@ namespace БаязитовЛангуге
                 else if (_client.GenderCode == "ж")
                     FemaleRB.IsChecked = true;
 
-                if (!string.IsNullOrEmpty(_client.PhotoPath))
-                {
-                    string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _client.PhotoPath.Replace('/', '\\'));
-                    if (File.Exists(fullPath))
-                    {
-                        PhotoImage.Source = new BitmapImage(new Uri(fullPath));
-                        _selectedPhotoFullPath = fullPath;
-                    }
 
-                    else
-                    {
-                        // заглушка
-                        SetDefaultPhoto();
-                    }
-                }
 
-                else
-                {
-                    SetDefaultPhoto();
-                }
+                LoadClientPhoto();
             }
 
             else // добавление
@@ -77,6 +60,51 @@ namespace БаязитовЛангуге
                 IDLabel.Visibility = Visibility.Collapsed;
 
                 // если фото не указывают
+                SetDefaultPhoto();
+            }
+        }
+        private void LoadClientPhoto()
+        {
+            if (string.IsNullOrEmpty(_client.PhotoPath))
+            {
+                SetDefaultPhoto();
+                return;
+            }
+
+            // Нормализуем путь
+            string normalizedPath = _client.PhotoPath.Replace('/', '\\');
+
+            // Пробуем найти файл в Debug
+            string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, normalizedPath);
+
+            // Если нет в Debug, ищем в папке проекта
+            if (!File.Exists(fullPath))
+            {
+                string projectFolder = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+                fullPath = Path.Combine(projectFolder, normalizedPath);
+            }
+
+            if (File.Exists(fullPath))
+            {
+                try
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(fullPath);
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                    PhotoImage.Source = bitmap;
+                    _selectedPhotoFullPath = fullPath;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Ошибка загрузки фото: {ex.Message}");
+                    SetDefaultPhoto();
+                }
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"Файл не найден: {fullPath}");
                 SetDefaultPhoto();
             }
         }

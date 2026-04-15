@@ -293,6 +293,7 @@
       <DependentUpon>BayazitovModel.edmx</DependentUpon>
       <LastGenOutput>BayazitovModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Клиенты\empty.png" />
     <Resource Include="Res\empty.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

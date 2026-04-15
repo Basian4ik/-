@@ -170,10 +170,15 @@ namespace БаязитовЛангуге
 
                 context.SaveChanges();
 
-                // обновляем локальный список и сбрасываем пагинацию
-                _filteredClients = context.Client.Include(c => c.ClientService).ToList();
-                currentPage = 1;
-                ChangePage();
+                // ОБНОВЛЯЕМ оба списка
+                _allClients = context.Client
+                    .Include(c => c.ClientService)
+                    .ToList();
+
+                _filteredClients = _allClients.ToList(); // Важно: копируем, а не ссылку
+
+                // Применяем текущие фильтры и сортировку
+                ApplyFiltersAndSort();
 
                 MessageBox.Show("Удаление выполнено.", "Результат", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -271,12 +276,23 @@ namespace БаязитовЛангуге
             ChangePage();
         }
 
-        private void Page_IsVisibleChanged()
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (this.IsVisible)
             {
-                ApplyFiltersAndSort();
+                RefreshData();
             }
+        }
+
+        // Добавьте новый метод для обновления данных
+        private void RefreshData()
+        {
+            var context = БаязитовLanguageEntities.GetContext();
+            _allClients = context.Client
+                .Include(c => c.ClientService)
+                .ToList();
+
+            ApplyFiltersAndSort(); // Это обновит _filteredClients и перерисует список
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
