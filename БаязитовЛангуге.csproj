@@ -69,6 +69,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BayazitovModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ImagePathConverter.cs" />
     <Compile Include="Client.cs">
       <DependentUpon>BayazitovModel.tt</DependentUpon>
     </Compile>
@@ -292,6 +293,7 @@
       <DependentUpon>BayazitovModel.edmx</DependentUpon>
       <LastGenOutput>BayazitovModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Res\empty.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

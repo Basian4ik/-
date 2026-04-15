@@ -29,6 +29,7 @@ namespace БаязитовЛангуге
         public string GenderCode { get; set; }
         public string Phone { get; set; }
         public string PhotoPath { get; set; }
+
         public System.DateTime Birthday { get; set; }
         public string BirthdayString
         {

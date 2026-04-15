@@ -79,10 +79,6 @@ namespace БаязитовЛангуге
             TBALLRecords.Text = " из " + _filteredClients.Count.ToString();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Manager.MainFrame.Navigate(new AddEditPage());
-        }
 
         private void LeftDirButton_Click(object sender, RoutedEventArgs e)
         {
@@ -189,15 +185,9 @@ namespace БаязитовЛангуге
 
         private void ClientsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ClientListView.SelectedItems.Count > 0)
-            {
-                DeleteBtn.Visibility = Visibility.Visible;
-            }
-
-            else
-            {
-                DeleteBtn.Visibility = Visibility.Hidden;
-            }
+            bool hasSelection = ClientListView.SelectedItems.Count > 0;
+            EditBtn.Visibility = hasSelection ? Visibility.Visible : Visibility.Hidden;
+            DeleteBtn.Visibility = hasSelection ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -281,5 +271,25 @@ namespace БаязитовЛангуге
             ChangePage();
         }
 
+        private void Page_IsVisibleChanged()
+        {
+            if (this.IsVisible)
+            {
+                ApplyFiltersAndSort();
+            }
+        }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage(null));
+        }
+
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (ClientListView.SelectedItem is Client selected)
+            {
+                Manager.MainFrame.Navigate(new AddEditPage(selected));
+            }
+        }
     }
 }

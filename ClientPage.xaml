@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="800"
       Title="Клиенты" FontFamily="Comic Sans MS">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"></RowDefinition>
@@ -31,6 +30,7 @@
                 <ComboBoxItem Tag="DiscountAsc">Кол-во посещений (по убыванию)</ComboBoxItem>
                 <ComboBoxItem Tag="DiscountDesc">По дате последнего посещения</ComboBoxItem>
             </ComboBox>
+            <Button Content="Добавить" Name="AddBtn" Click="AddBtn_Click"></Button>
         </StackPanel>
         
 
@@ -50,14 +50,9 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
-                        <Image Width="200" Grid.Column="0" Stretch="UniformToFill" HorizontalAlignment="Center" Grid.RowSpan="5">
+                        <Image Grid.Column="0" Grid.RowSpan="8" Width="200" Stretch="UniformToFill" HorizontalAlignment="Left">
                             <Image.Source>
                                 <Binding Path="PhotoPath">
-                                    <Binding.TargetNullValue>
-                                        <ImageSource>
-                                            Res/school_logo.png
-                                        </ImageSource>
-                                    </Binding.TargetNullValue>
                                 </Binding>
                             </Image.Source>
                         </Image>
@@ -95,8 +90,12 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Content="Удалить" Name="DeleteBtn" Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Center"
-             Click="DeleteBtn_Click" Width="100" Visibility="Visible"></Button>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Button Content="Удалить" Name="DeleteBtn" Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Center"
+                Click="DeleteBtn_Click" Width="100" Visibility="Visible"></Button>
+
+            <Button Content="Редактировать" Name="EditBtn" Click="EditBtn_Click"  Width="150" Visibility="Visible"></Button>
+        </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
             <TextBlock Name="TBCount" FontSize="20"  VerticalAlignment="Center" ></TextBlock>
             <TextBlock Name="TBALLRecords" FontSize="20"   VerticalAlignment="Center"></TextBlock>
