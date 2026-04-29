@@ -251,17 +251,35 @@ namespace БаязитовЛангуге
                 MessageBox.Show("Введите корректный email.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-
-            if (PhoneTB.Text.Length > 20)
+            var englishEmailRegex = new Regex(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+            if (!englishEmailRegex.IsMatch(EmailTB.Text))
             {
-                MessageBox.Show("Телефон не может быть длиннее 20 символов.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Email должен содержать только английские буквы (a-z, A-Z), цифры и символы ( . _ % + - )",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
 
-            var phoneRegex = new Regex(@"^[\d+\-\(\)\s]+$");
-            if (!phoneRegex.IsMatch(PhoneTB.Text) || string.IsNullOrWhiteSpace(PhoneTB.Text))
+            if (string.IsNullOrWhiteSpace(PhoneTB.Text))
             {
-                MessageBox.Show("Телефон может содержать только цифры и символы +, -, (, ), пробел.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Введите номер телефона.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            // Удаляем все символы, кроме цифр
+            string phoneDigits = new string(PhoneTB.Text.Where(char.IsDigit).ToArray());
+
+            // Проверяем, что цифр ровно 11
+            if (phoneDigits.Length != 11)
+            {
+                MessageBox.Show("Номер телефона должен содержать ровно 11 цифр.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            // Проверяем, что используются только разрешенные символы: цифры, +, -, (, ), пробел
+            var phoneRegex = new Regex(@"^[\d+\-\(\)\s]+$");
+            if (!phoneRegex.IsMatch(PhoneTB.Text))
+            {
+                MessageBox.Show("Телефон может содержать только цифры и символы: +, -, (, ), пробел.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
 
